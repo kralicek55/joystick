@@ -22,10 +22,18 @@ joystickbit.initJoystickBit()
 radio.setGroup(90)
 zobraz_logo()
 basic.forever(function () {
-    X = Math.map(joystickbit.getRockerValue(joystickbit.rockerType.X), 1023, 0, -90, 90)
-    Y = Math.map(joystickbit.getRockerValue(joystickbit.rockerType.Y), 0, 1023, -100, 100)
-    radio.sendValue("X", X)
-    radio.sendValue("Y", Y)
-    kitronik_VIEW128x64.show("   X: " + Math.round(X) + "   ", 1, kitronik_VIEW128x64.ShowAlign.Centre, kitronik_VIEW128x64.FontSelection.Big)
-    kitronik_VIEW128x64.show("   Y: " + Math.round(Y) + "   ", 3, kitronik_VIEW128x64.ShowAlign.Centre, kitronik_VIEW128x64.FontSelection.Big)
+    X = Math.round(Math.map(joystickbit.getRockerValue(joystickbit.rockerType.X), 1023, 0, -90, 90))
+    Y = Math.round(Math.map(joystickbit.getRockerValue(joystickbit.rockerType.Y), 0, 1023, -100, 100))
+    kitronik_VIEW128x64.show("   X: " + X + "   ", 1, kitronik_VIEW128x64.ShowAlign.Centre, kitronik_VIEW128x64.FontSelection.Big)
+    kitronik_VIEW128x64.show("   Y: " + Y + "   ", 3, kitronik_VIEW128x64.ShowAlign.Centre, kitronik_VIEW128x64.FontSelection.Big)
+    if (X > 2 || X < -2) {
+        radio.sendValue("X", X)
+    } else {
+        radio.sendValue("X", 0)
+    }
+    if (Y > 2 || Y < -2) {
+        radio.sendValue("Y", Y)
+    } else {
+        radio.sendValue("Y", 0)
+    }
 })
